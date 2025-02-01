@@ -1,5 +1,6 @@
 package com.alpha.www.Employee.service.impl;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.alpha.www.Employee.dto.EmployeeDto;
@@ -15,25 +16,31 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	private EmployeeRepository employeeRepository;
 	
+	private ModelMapper modelMapper;
+	
 	@Override
 	public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
 		
 		// dto to entity
-		Employee employee = new Employee(
-				employeeDto.getId(), 
-				employeeDto.getFirstName(), 
-				employeeDto.getLastName(), 
-				employeeDto.getEmail());
+//		Employee employee = new Employee(
+//				employeeDto.getId(), 
+//				employeeDto.getFirstName(), 
+//				employeeDto.getLastName(), 
+//				employeeDto.getEmail());
+		
+		Employee employee = modelMapper.map(employeeDto, Employee.class);
 		
 		// save to db
 		Employee savedEmployee = employeeRepository.save(employee);
 		
 		// entity to dto
-		EmployeeDto savedEmployeeDto = new EmployeeDto(
-				savedEmployee.getId(), 
-				savedEmployee.getFirstName(), 
-				savedEmployee.getLastName(), 
-				savedEmployee.getEmail());
+//		EmployeeDto savedEmployeeDto = new EmployeeDto(
+//				savedEmployee.getId(), 
+//				savedEmployee.getFirstName(), 
+//				savedEmployee.getLastName(), 
+//				savedEmployee.getEmail());
+		
+		EmployeeDto savedEmployeeDto = modelMapper.map(savedEmployee, EmployeeDto.class);
 		
 		return savedEmployeeDto;
 	}
@@ -43,11 +50,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		Employee employee = employeeRepository.findById(id).get();
 		
 		// entity to dto
-		EmployeeDto employeeDto = new EmployeeDto(
-				employee.getId(), 
-				employee.getFirstName(), 
-				employee.getLastName(), 
-				employee.getEmail());
+//		EmployeeDto employeeDto = new EmployeeDto(
+//				employee.getId(), 
+//				employee.getFirstName(), 
+//				employee.getLastName(), 
+//				employee.getEmail());
+		
+		EmployeeDto employeeDto = modelMapper.map(employee, EmployeeDto.class);
 		
 		return employeeDto;
 	}

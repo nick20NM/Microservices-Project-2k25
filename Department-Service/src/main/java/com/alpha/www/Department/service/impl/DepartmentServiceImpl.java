@@ -1,5 +1,6 @@
 package com.alpha.www.Department.service.impl;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.alpha.www.Department.dto.DepartmentDto;
@@ -15,25 +16,31 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	private DepartmentRepository departmentRepository;
 	
+	private ModelMapper modelMapper;
+	
 	@Override
 	public DepartmentDto saveDepartment(DepartmentDto departmentDto) {
 		
 		// convert department dto to department jpa entity
-		Department department = new Department(
-				departmentDto.getId(), 
-				departmentDto.getDepartmentName(), 
-				departmentDto.getDepartmentDescription(), 
-				departmentDto.getDepartmentCode());
+//		Department department = new Department(
+//				departmentDto.getId(), 
+//				departmentDto.getDepartmentName(), 
+//				departmentDto.getDepartmentDescription(), 
+//				departmentDto.getDepartmentCode());
+		
+		Department department = modelMapper.map(departmentDto, Department.class);
 		
 		// save to db
 		Department savedDeparment = departmentRepository.save(department);
 		
 		// convert department jpa entity to department dto
-		DepartmentDto savedDepartmentDto = new DepartmentDto(
-				savedDeparment.getId(), 
-				savedDeparment.getDepartmentName(), 
-				savedDeparment.getDepartmentDescription(), 
-				savedDeparment.getDepartmentCode());
+//		DepartmentDto savedDepartmentDto = new DepartmentDto(
+//				savedDeparment.getId(), 
+//				savedDeparment.getDepartmentName(), 
+//				savedDeparment.getDepartmentDescription(), 
+//				savedDeparment.getDepartmentCode());
+		
+		DepartmentDto savedDepartmentDto = modelMapper.map(savedDeparment, DepartmentDto.class);
 		
 		return savedDepartmentDto;
 	}
@@ -43,11 +50,13 @@ public class DepartmentServiceImpl implements DepartmentService {
 		Department department = departmentRepository.findByDepartmentCode(departmentCode);
 		
 		// entity to dto
-		DepartmentDto departmentDto = new DepartmentDto(
-				department.getId(), 
-				department.getDepartmentName(), 
-				department.getDepartmentDescription(), 
-				department.getDepartmentCode());
+//		DepartmentDto departmentDto = new DepartmentDto(
+//				department.getId(), 
+//				department.getDepartmentName(), 
+//				department.getDepartmentDescription(), 
+//				department.getDepartmentCode());
+		
+		DepartmentDto departmentDto = modelMapper.map(department, DepartmentDto.class);
 		return departmentDto;
 	}
 
