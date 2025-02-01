@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.alpha.www.Employee.dto.EmployeeDto;
 import com.alpha.www.Employee.entity.Employee;
+import com.alpha.www.Employee.mapper.EmployeeMapper;
 import com.alpha.www.Employee.repository.EmployeeRepository;
 import com.alpha.www.Employee.service.EmployeeService;
 
@@ -16,7 +17,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	private EmployeeRepository employeeRepository;
 	
-	private ModelMapper modelMapper;
+//	private ModelMapper modelMapper;
 	
 	@Override
 	public EmployeeDto saveEmployee(EmployeeDto employeeDto) {
@@ -28,7 +29,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 //				employeeDto.getLastName(), 
 //				employeeDto.getEmail());
 		
-		Employee employee = modelMapper.map(employeeDto, Employee.class);
+//		Employee employee = modelMapper.map(employeeDto, Employee.class);
+		
+		Employee employee = EmployeeMapper.MAPPER.mapToEmployee(employeeDto);
 		
 		// save to db
 		Employee savedEmployee = employeeRepository.save(employee);
@@ -40,7 +43,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 //				savedEmployee.getLastName(), 
 //				savedEmployee.getEmail());
 		
-		EmployeeDto savedEmployeeDto = modelMapper.map(savedEmployee, EmployeeDto.class);
+//		EmployeeDto savedEmployeeDto = modelMapper.map(savedEmployee, EmployeeDto.class);
+		
+		EmployeeDto savedEmployeeDto = EmployeeMapper.MAPPER.mapToEmployeeDto(savedEmployee);
 		
 		return savedEmployeeDto;
 	}
@@ -56,7 +61,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 //				employee.getLastName(), 
 //				employee.getEmail());
 		
-		EmployeeDto employeeDto = modelMapper.map(employee, EmployeeDto.class);
+//		EmployeeDto employeeDto = modelMapper.map(employee, EmployeeDto.class);
+		
+		EmployeeDto employeeDto = EmployeeMapper.MAPPER.mapToEmployeeDto(employee);
 		
 		return employeeDto;
 	}
