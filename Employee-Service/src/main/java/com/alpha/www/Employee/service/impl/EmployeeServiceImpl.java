@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.alpha.www.Employee.dto.EmployeeDto;
 import com.alpha.www.Employee.entity.Employee;
+import com.alpha.www.Employee.exception.ResourceNotFoundException;
 import com.alpha.www.Employee.mapper.EmployeeMapper;
 import com.alpha.www.Employee.repository.EmployeeRepository;
 import com.alpha.www.Employee.service.EmployeeService;
@@ -52,7 +53,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public EmployeeDto getEmployee(Long id) {
-		Employee employee = employeeRepository.findById(id).get();
+		Employee employee = employeeRepository
+				.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Employee", "id", id));
 		
 		// entity to dto
 //		EmployeeDto employeeDto = new EmployeeDto(

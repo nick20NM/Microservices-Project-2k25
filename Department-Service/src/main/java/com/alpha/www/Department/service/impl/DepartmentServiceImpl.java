@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.alpha.www.Department.dto.DepartmentDto;
 import com.alpha.www.Department.entity.Department;
+import com.alpha.www.Department.exception.ResourceNotFoundException;
 import com.alpha.www.Department.mapper.DepartmentMapper;
 import com.alpha.www.Department.repository.DepartmentRepository;
 import com.alpha.www.Department.service.DepartmentService;
@@ -50,7 +51,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Override
 	public DepartmentDto getDepartmentByCode(String departmentCode) {
-		Department department = departmentRepository.findByDepartmentCode(departmentCode);
+		Department department = departmentRepository
+				.findByDepartmentCode(departmentCode)
+				.orElseThrow(() -> new ResourceNotFoundException("Department", "code", departmentCode));
 		
 		// entity to dto
 //		DepartmentDto departmentDto = new DepartmentDto(
