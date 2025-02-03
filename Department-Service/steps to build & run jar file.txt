@@ -1,0 +1,6 @@
+For Eclipse/STS
+
+1) Right click on spring boot project-> Maven build-> Goals-"package"-> Run
+
+2) Nick@Nick MINGW64 /d/[NEW] Building Microservices with Spring Boot & Spring Cloud-2k25/sts-workspace/Microservices-Project/Department-Service (main)
+$ java -jar -Dserver.port=9090 target/Department-Service-0.0.1-SNAPSHOT.jar
