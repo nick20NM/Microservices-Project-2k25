@@ -1,4 +1,4 @@
-package com.alpha.www.Department.controller;
+package com.alpha.www.Employee.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -12,7 +12,7 @@ public class MessageController {
 	@Value("${spring.boot.message}")
 	private String message;
 	
-	@GetMapping("/dep/message")
+	@GetMapping("/emp/message")
 	public String message() {
 		return message;
 	}
