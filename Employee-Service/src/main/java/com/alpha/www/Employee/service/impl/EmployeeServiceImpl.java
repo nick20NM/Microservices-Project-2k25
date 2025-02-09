@@ -1,6 +1,8 @@
 package com.alpha.www.Employee.service.impl;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -17,11 +19,14 @@ import com.alpha.www.Employee.service.APIClient;
 import com.alpha.www.Employee.service.EmployeeService;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeServiceImpl.class);
 
 	private EmployeeRepository employeeRepository;
 	
@@ -64,9 +69,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return savedEmployeeDto;
 	}
 
-	@CircuitBreaker(name = "${spring.application.name}", fallbackMethod = "getDefaultDepartment")
+	@Retry(name = "${spring.application.name}", fallbackMethod = "getDefaultDepartment")
+//	@CircuitBreaker(name = "${spring.application.name}", fallbackMethod = "getDefaultDepartment")
 	@Override
 	public APIResponseDto getEmployee(Long id) {
+		
+		LOGGER.info("inside getEmployee() method");
+		
 		Employee employee = employeeRepository
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee", "id", id));
@@ -102,6 +111,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	public APIResponseDto getDefaultDepartment(Long id, Exception exception) {
+		
+		LOGGER.info("inside getDefaultDepartment() method");
+		
 		Employee employee = employeeRepository
 				.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Employee", "id", id));
