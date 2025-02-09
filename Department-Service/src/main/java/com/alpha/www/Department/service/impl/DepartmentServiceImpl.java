@@ -7,6 +7,7 @@ import com.alpha.www.Department.dto.DepartmentDto;
 import com.alpha.www.Department.entity.Department;
 import com.alpha.www.Department.exception.ResourceNotFoundException;
 import com.alpha.www.Department.mapper.DepartmentMapper;
+import com.alpha.www.Department.mapper.DepartmentMapper2;
 import com.alpha.www.Department.repository.DepartmentRepository;
 import com.alpha.www.Department.service.DepartmentService;
 
@@ -31,7 +32,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 //				departmentDto.getDepartmentCode());
 		
 //		Department department = modelMapper.map(departmentDto, Department.class);
-		Department department = DepartmentMapper.MAPPER.mapToDepartment(departmentDto);
+//		Department department = DepartmentMapper.MAPPER.mapToDepartment(departmentDto);
+		Department department = DepartmentMapper2.dtoToEntity(departmentDto);
 		
 		// save to db
 		Department savedDeparment = departmentRepository.save(department);
@@ -44,7 +46,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 //				savedDeparment.getDepartmentCode());
 		
 //		DepartmentDto savedDepartmentDto = modelMapper.map(savedDeparment, DepartmentDto.class);
-		DepartmentDto savedDepartmentDto = DepartmentMapper.MAPPER.mapToDepartmentDto(savedDeparment);
+//		DepartmentDto savedDepartmentDto = DepartmentMapper.MAPPER.mapToDepartmentDto(savedDeparment);
+		DepartmentDto savedDepartmentDto = DepartmentMapper2.entityToDto(savedDeparment);
 		
 		return savedDepartmentDto;
 	}
@@ -63,7 +66,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 //				department.getDepartmentCode());
 		
 //		DepartmentDto departmentDto = modelMapper.map(department, DepartmentDto.class);
-		DepartmentDto departmentDto = DepartmentMapper.MAPPER.mapToDepartmentDto(department);
+//		DepartmentDto departmentDto = DepartmentMapper.MAPPER.mapToDepartmentDto(department);
+		DepartmentDto departmentDto = DepartmentMapper2.entityToDto(department);
 		return departmentDto;
 	}
 

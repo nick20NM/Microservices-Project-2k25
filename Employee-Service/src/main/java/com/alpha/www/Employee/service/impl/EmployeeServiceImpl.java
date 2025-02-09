@@ -14,6 +14,7 @@ import com.alpha.www.Employee.dto.EmployeeDto;
 import com.alpha.www.Employee.entity.Employee;
 import com.alpha.www.Employee.exception.ResourceNotFoundException;
 import com.alpha.www.Employee.mapper.EmployeeMapper;
+import com.alpha.www.Employee.mapper.EmployeeMapper2;
 import com.alpha.www.Employee.repository.EmployeeRepository;
 import com.alpha.www.Employee.service.APIClient;
 import com.alpha.www.Employee.service.EmployeeService;
@@ -50,7 +51,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 //		Employee employee = modelMapper.map(employeeDto, Employee.class);
 		
-		Employee employee = EmployeeMapper.MAPPER.mapToEmployee(employeeDto);
+//		Employee employee = EmployeeMapper.MAPPER.mapToEmployee(employeeDto);
+		Employee employee = EmployeeMapper2.dtoToEntity(employeeDto);
 		
 		// save to db
 		Employee savedEmployee = employeeRepository.save(employee);
@@ -64,7 +66,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 //		EmployeeDto savedEmployeeDto = modelMapper.map(savedEmployee, EmployeeDto.class);
 		
-		EmployeeDto savedEmployeeDto = EmployeeMapper.MAPPER.mapToEmployeeDto(savedEmployee);
+//		EmployeeDto savedEmployeeDto = EmployeeMapper.MAPPER.mapToEmployeeDto(savedEmployee);
+		EmployeeDto savedEmployeeDto = EmployeeMapper2.entityToDto(savedEmployee);
 		
 		return savedEmployeeDto;
 	}
@@ -103,7 +106,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 //		EmployeeDto employeeDto = modelMapper.map(employee, EmployeeDto.class);
 		
-		EmployeeDto employeeDto = EmployeeMapper.MAPPER.mapToEmployeeDto(employee);
+//		EmployeeDto employeeDto = EmployeeMapper.MAPPER.mapToEmployeeDto(employee);
+		EmployeeDto employeeDto = EmployeeMapper2.entityToDto(employee);
 		
 		APIResponseDto apiResponseDto = new APIResponseDto(employeeDto, departmentDto);
 		
@@ -123,7 +127,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		departmentDto.setDepartmentCode("RD001");
 		departmentDto.setDepartmentDescription("Research and Development Department");
 		
-		EmployeeDto employeeDto = EmployeeMapper.MAPPER.mapToEmployeeDto(employee);
+//		EmployeeDto employeeDto = EmployeeMapper.MAPPER.mapToEmployeeDto(employee);
+		EmployeeDto employeeDto = EmployeeMapper2.entityToDto(employee);
 		
 		APIResponseDto apiResponseDto = new APIResponseDto(employeeDto, departmentDto);
 		
