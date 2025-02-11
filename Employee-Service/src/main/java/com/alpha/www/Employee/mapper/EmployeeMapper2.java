@@ -12,7 +12,8 @@ public class EmployeeMapper2 {
 				employeeDto.getFirstName(), 
 				employeeDto.getLastName(), 
 				employeeDto.getEmail(), 
-				employeeDto.getDepartmentCode());
+				employeeDto.getDepartmentCode(), 
+				employeeDto.getOrganizationCode());
 	}
 	
 	// entity to dto
@@ -22,6 +23,7 @@ public class EmployeeMapper2 {
 				employee.getFirstName(), 
 				employee.getLastName(), 
 				employee.getEmail(), 
-				employee.getDepartmentCode());
+				employee.getDepartmentCode(), 
+				employee.getOrganizationCode());
 	}
 }

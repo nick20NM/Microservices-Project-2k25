@@ -11,6 +11,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import com.alpha.www.Employee.dto.APIResponseDto;
 import com.alpha.www.Employee.dto.DepartmentDto;
 import com.alpha.www.Employee.dto.EmployeeDto;
+import com.alpha.www.Employee.dto.OrganizationDto;
 import com.alpha.www.Employee.entity.Employee;
 import com.alpha.www.Employee.exception.ResourceNotFoundException;
 import com.alpha.www.Employee.mapper.EmployeeMapper;
@@ -95,6 +96,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 				.bodyToMono(DepartmentDto.class)
 				.block();
 		
+		OrganizationDto organizationDto = webClient
+				.get()
+				.uri("http://localhost:8083/api/organizations/" + employee.getOrganizationCode())
+				.retrieve()
+				.bodyToMono(OrganizationDto.class)
+				.block();
+		
 //		DepartmentDto departmentDto = apiClient.getDepartmentByCode(employee.getDepartmentCode());
 		
 		// entity to dto
@@ -109,7 +117,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 //		EmployeeDto employeeDto = EmployeeMapper.MAPPER.mapToEmployeeDto(employee);
 		EmployeeDto employeeDto = EmployeeMapper2.entityToDto(employee);
 		
-		APIResponseDto apiResponseDto = new APIResponseDto(employeeDto, departmentDto);
+		APIResponseDto apiResponseDto = new APIResponseDto(employeeDto, departmentDto, organizationDto);
 		
 		return apiResponseDto;
 	}
@@ -130,7 +138,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 //		EmployeeDto employeeDto = EmployeeMapper.MAPPER.mapToEmployeeDto(employee);
 		EmployeeDto employeeDto = EmployeeMapper2.entityToDto(employee);
 		
-		APIResponseDto apiResponseDto = new APIResponseDto(employeeDto, departmentDto);
+		APIResponseDto apiResponseDto = new APIResponseDto(employeeDto, departmentDto, 
+				new OrganizationDto(0L, "dummy", "dummy", "dummy", null));
 		
 		return apiResponseDto;
 	}
