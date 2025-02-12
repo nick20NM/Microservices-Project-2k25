@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
 @Tag(
-		name = "Department Controller", 
+		name = "DepartmentController", 
 		description = "Exposes REST API's for Department-Service"
 		)
 @RestController
