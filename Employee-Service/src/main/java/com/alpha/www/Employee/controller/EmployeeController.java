@@ -13,8 +13,15 @@ import com.alpha.www.Employee.dto.APIResponseDto;
 import com.alpha.www.Employee.dto.EmployeeDto;
 import com.alpha.www.Employee.service.EmployeeService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 
+@Tag(
+		name = "EmployeeController", 
+		description = "Exposes REST API's for Employee-Service"
+		)
 @RestController
 @RequestMapping("api/employees")
 @AllArgsConstructor
@@ -22,12 +29,28 @@ public class EmployeeController {
 
 	private EmployeeService employeeService;
 	
+	@Operation(
+			summary = "Save Employee REST API", 
+			description = "Used to save employee object into database"
+			)
+	@ApiResponse(
+			responseCode = "201", 
+			description = "HTTP Status 201 CREATED"
+			)
 	@PostMapping
 	public ResponseEntity<EmployeeDto> saveEmployee(@RequestBody EmployeeDto employeeDto){
 		EmployeeDto savedEmployee = employeeService.saveEmployee(employeeDto);
 		return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
 	}
 	
+	@Operation(
+			summary = "Get Employee REST API", 
+			description = "Used to get an employee object from the database"
+			)
+	@ApiResponse(
+			responseCode = "200", 
+			description = "HTTP Status 200 OK"
+			)
 	@GetMapping("{id}")
 	public ResponseEntity<APIResponseDto> getEmployee(@PathVariable Long id){
 		APIResponseDto apiResponseDto = employeeService.getEmployee(id);
